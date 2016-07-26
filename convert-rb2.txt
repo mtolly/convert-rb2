@@ -1,0 +1,161 @@
+* How to convert RB3 customs to RB2, without Magma v1 *
+
+First, grab from the RB3 CON file:
+- midi
+- mogg
+- songs.dta
+- .png_xbox
+
+Next edit your midi file.
+- You can convert your VENUE to RB2 format with the Wii converter in C3 CON Tools
+- Remove any RB3 added stuff:
+  - keys/prokeys (or rename keys to gtr or bass, and fix overlapping sustains)
+  - harmonies
+  - trill/tremolo/drum-rolls
+  - drum animation events:
+    - snare soft hits with either hand
+    - ride left hand hit
+    - crash 2 (near ride) left hand hit (either hard or soft)
+  - lyric/range shift notes on vocals
+  - bass solos
+  - don't need to remove pro drums tom markers
+- Convert section events from [prc_verse_foo] to [section verse_foo]
+- Fix partial unisons
+
+Next make your RB2 songs.dta. Here is the exact format I have been following...
+
+(
+   THESONGID ; this can be a number or alphanumeric
+   (
+      'name'
+      "Song title goes here"
+      ; copy from rb3 songs.dta
+   )
+   (
+      'artist'
+      "Artist goes here"
+      ; copy from rb3 songs.dta
+   )
+   ('master' 1)
+   (
+      'song'
+      (
+         'name'
+         "songs/THESONGFILENAME/THESONGFILENAME"
+         ; this should match how your files are named
+      )
+      ; Magma puts a 'tracks_count' key here but it's unnecessary
+      (
+         'tracks'
+         ; Copy this from rb3 songs.dta.
+         ; Remove 'keys' if present.
+         ; (or rename 'keys' to 'guitar' or 'bass' if you did that)
+         (
+            (
+               'drum'
+               (0 1)
+            )
+            (
+               'bass'
+               (2 3)
+            )
+            (
+               'guitar'
+               (4 5)
+            )
+            (
+               'vocals'
+               (6 7)
+            )
+         )
+      )
+      (
+         'pans'
+         ; copy this directly from rb3 songs.dta
+         ; you *don't* need to edit this to remove keys channels!
+         (-1.00 1.00 -1.00 1.00 -1.00 1.00 -1.00 1.00)
+      )
+      (
+         'vols'
+         ; copy this directly from rb3 songs.dta
+         (0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00)
+      )
+      (
+         'cores'
+         (-1 -1 -1 -1 -1 -1 -1 -1)
+         ; copy this directly from rb3 songs.dta
+      )
+      (
+         'drum_solo'
+         (
+            'seqs'
+            ('kick.cue' 'snare.cue' 'tom1.cue' 'tom2.cue' 'crash.cue')
+         )
+      )
+      (
+         'drum_freestyle'
+         (
+            'seqs'
+            ('kick.cue' 'snare.cue' 'hat.cue' 'ride.cue' 'crash.cue')
+         )
+      )
+      (
+         'midi_file'
+         "songs/THESONGFILENAME/THESONGFILENAME.mid"
+         ; again, should match how your midi file is named
+      )
+   )
+   ('song_scroll_speed' 2300) ; can copy from rb3 songs.dta
+   (
+      'bank'
+      "sfx/tambourine_bank.milo"
+      ; copy from rb3 songs.dta
+   )
+   ('anim_tempo' 32) ; copy from rb3 songs.dta
+   ('song_length' 238163) ; copy from rb3 songs.dta
+   ('preview' 62000 92000) ; copy from rb3 songs.dta
+   (
+      ; copy from rb3 songs.dta
+      ; of course, remove 'keys' 'real_keys' 'real_guitar' 'real_bass'
+      'rank'
+      ('drum' 349)
+      ('guitar' 406)
+      ('bass' 166)
+      ('vocals' 0)
+      ('band' 383)
+   )
+   ('genre' 'metal') ; copy from rb3 songs.dta. some genres are different, see below
+   ('decade' 'the00s')
+   ; ^ not sure if necessary. fill in with decade that matches year_released:
+   ; 'the60s' 'the70s' 'the80s' 'the90s' 'the00s' 'the10s'
+   ('vocal_gender' 'male') ; copy from rb3 songs.dta.
+   ('version' 0)
+   ('downloaded' 1)
+   ('format' 4)
+   ('album_art' 1)
+   ('year_released' 2006) ; copy from rb3 songs.dta
+   ('base_points' 0) ; just leave as 0. not necessary to pre-calculate
+   ('rating' 4) ; copy from rb3 songs.dta
+   ('sub_genre' 'subgenre_other') ; copy from rb3 songs.dta. some genres are different, see below
+   ('song_id' THESONGID)
+   ('tuning_offset_cents' 0.00) ; copy from rb3 songs.dta
+   ('context' 2000)
+   ('game_origin' 'rb2')
+   (
+      'album_name'
+      "Album name goes here" ; copy from rb3 songs.dta
+   )
+   ('album_track_number' 69) ; copy from rb3 songs.dta
+)
+
+Finally, put it all together like so:
+songs/songs.dta ; your new rb2 songs.dta
+songs/THESONGFILENAME/THESONGFILENAME.mid ; your new rb2 midi
+songs/THESONGFILENAME/THESONGFILENAME.mogg ; mogg straight from rb3. even encrypted ones work!
+songs/THESONGFILENAME/THESONGFILENAME.pan ; empty file.
+songs/THESONGFILENAME/gen/THESONGFILENAME_keep.png_xbox ; straight from rb3
+songs/THESONGFILENAME/gen/THESONGFILENAME.milo_xbox ; provided, see link
+songs/THESONGFILENAME/gen/THESONGFILENAME_weights.bin ; provided, see link
+
+Glue it all together into a CON STFS package with the RB2 game ID, and you should be done!
+Make sure you are on the latest RB2 update, or else songs without vocals can freeze the game.

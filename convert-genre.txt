@@ -1,0 +1,62 @@
+CONVERTING A GENRE/SUBGENRE FROM RB3 TO RB2
+
+If your genre is one of these, genre/subgenre are unchanged.
+  alternative
+  blues
+  classicrock
+  country
+  emo
+  fusion
+  glam
+  grunge
+  indierock
+  jazz
+  metal
+  newwave
+  novelty
+  numetal
+  poprock
+  prog
+  punk
+  rock
+  southernrock
+  other
+
+These genres don't exist in RB2,
+probably just change to other/subgenre_other or rock/subgenre_rock:
+  classical
+  inspirational
+  latin
+  jrock
+  world
+
+If your genre is "hiphoprap", change to "urban" and subgenre is unchanged.
+
+If your genre is "reggaeska", change to one of
+  rock / subgenre_reggae
+  rock / subgenre_ska
+
+If your genre is "popdanceelectronic", change as follows:
+  subgenre_ambient -> other / subgenre_ambient
+  subgenre_breakbeat -> other / subgenre_breakbeat
+  subgenre_chiptune -> other / subgenre_chiptune
+  subgenre_dance -> other / subgenre_dance
+  subgenre_downtempo -> other / subgenre_electronica (didn't exist)
+  subgenre_dub -> rock / subgenre_reggae (didn't exist)
+  subgenre_drumandbass -> other / subgenre_drumandbass
+  subgenre_electronica -> other / subgenre_electronica
+  subgenre_garage -> urban / subgenre_garage
+  subgenre_hardcoredance -> urban / subgenre_hardcoredance
+  subgenre_house -> other / subgenre_house
+  subgenre_industrial -> urban / subgenre_industrial
+  subgenre_techno -> other / subgenre_techno
+  subgenre_trance -> other / subgenre_trance
+  subgenre_other -> other / subgenre_electronica
+
+If your genre is "rbsoulfunk", look at subgenre and change as follows:
+  subgenre_disco -> poprock / subgenre_disco
+  subgenre_funk -> rock / subgenre_funk
+  subgenre_motown -> poprock / subgenre_motown
+  subgenre_rhythmandblues -> poprock / subgenre_rhythmandblues
+  subgenre_soul -> poprock / subgenre_soul
+  subgenre_other -> poprock / subgenre_rhythmandblues
